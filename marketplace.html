@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SaveIt - NGO Food Discovery Marketplace</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#21c45d",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#122017",
+                        "surface-dark": "#1d2620",
+                        "surface-glass": "rgba(29, 38, 32, 0.7)",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?q=80&w=2574&auto=format&fit=crop')",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-card {
+            background: rgba(29, 38, 32, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .glass-panel {
+            background: rgba(18, 32, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #122017; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a372f; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-hidden h-screen flex">
+<!-- Sidebar Navigation -->
+<aside class="w-[280px] h-full flex flex-col justify-between glass-panel z-50 relative hidden md:flex">
+<div class="flex flex-col gap-8 p-6">
+<!-- Brand -->
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 aspect-square rounded-full w-10 h-10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">recycling</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold leading-tight">SaveIt</h1>
+<p class="text-slate-400 text-xs font-normal">Food Rescue Platform</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined fill-1">storefront</span>
+<span class="text-sm font-medium">Marketplace</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="text-sm font-medium">Logistics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- User Profile Minimal -->
+<div class="p-6 border-t border-white/5">
+<div class="flex items-center gap-3">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover border-2 border-primary/20" data-alt="Professional woman smiling in corporate attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXvI-Q-tKaZ6Knp3M-m_KbKhY8hA9Boc_NS2_jOY59zKNWDRhVMyLK9B2TNYlioF_tsWLmf6oilp1R34CfmvgLSD_2wzrMy0IV3Zpxx8LmBSurF3ZZY5_P-u5UF56hTwNdES7s3rmqTfgf8sKkDMiPxNzpIHOJSeUE6dBNHtqG3zp2QCqDZ_z_GAS_yPhcXY5vkiQrzlkv8zgm9cSumyglAp3BFaCFEyYCfSyBhtn-tfC93PrCFxWl4Mzo_fWNm9e9rQNj38Vej2Y"/>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-white">Sarah Jenkins</p>
+<p class="text-xs text-slate-400">NGO Director</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area with Ambient Background -->
+<main class="flex-1 relative flex flex-col h-full">
+<!-- Ambient Background Image -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+<div class="w-full h-full bg-hero-pattern bg-cover bg-center blur-sm" data-alt="Close up of fresh gourmet bread loaves"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-background-dark/80 via-background-dark/50 to-background-dark"></div>
+</div>
+<!-- Header Area -->
+<header class="relative z-10 px-8 py-6 flex justify-between items-start">
+<div>
+<h2 class="text-3xl font-bold text-white tracking-tight">Rescue Opportunities</h2>
+<p class="text-slate-400 mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                    Downtown District • Within 5 miles
+                </p>
+</div>
+<!-- Gamification HUD -->
+<div class="flex items-center gap-4">
+<div class="glass-card px-4 py-2 rounded-full flex items-center gap-3 border border-primary/30">
+<div class="flex flex-col items-end">
+<span class="text-xs text-primary font-bold uppercase tracking-wider">Level 5</span>
+<span class="text-sm font-bold text-white">Food Saver Hero</span>
+</div>
+<div class="relative w-12 h-12 flex items-center justify-center">
+<!-- Circular Progress SVG -->
+<svg class="transform -rotate-90 w-12 h-12">
+<circle class="text-slate-700" cx="24" cy="24" fill="transparent" r="18" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="18" stroke="currentColor" stroke-dasharray="113" stroke-dashoffset="17" stroke-width="4"></circle>
+</svg>
+<span class="absolute text-[10px] font-bold text-white">85%</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Tinder-style Card Stack Container -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pb-8 w-full max-w-7xl mx-auto">
+<div class="relative w-full max-w-4xl h-[600px] flex items-center justify-center perspective-[1000px]">
+<!-- Background "Next" Card (Ghost Card) -->
+<div class="absolute top-4 w-[85%] h-full bg-surface-dark rounded-xl opacity-40 scale-95 translate-y-4 blur-[1px] border border-white/10 z-0"></div>
+<div class="absolute top-2 w-[90%] h-full bg-surface-dark rounded-xl opacity-60 scale-[0.98] translate-y-2 border border-white/10 z-10"></div>
+<!-- Active Main Card -->
+<div class="relative w-full h-full glass-card rounded-xl overflow-hidden flex flex-col md:flex-row z-20 group">
+<!-- Left: Hero Image -->
+<div class="relative h-64 md:h-full md:w-1/2 overflow-hidden">
+<img alt="Artisan Sourdough Bread" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Freshly baked artisan sourdough bread on a dark table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8vDIBpksMfT3-P2_wg0jjMZVraFJIKZrjHlmBuhaYcJSubFOOUkUljvNW5TeP-l1d0PQNkkanQnV-Chih3U1tbIAhjDhMnyrhCZbQLYbnCogeHOSscYlKjt0n4r-63D1EM_YPDLkD0gxbOUqGt96epqWUeZZ6usxM_THYrSmw3b1wvQq360K6mFIJ5rTKXuko8U97-_5htxErzKSRHDfMBsKJrhR3iB6a85vZbH54VaAZUG9Mh-6MtMFWLI60G7AadOczZR3-Rw4"/>
+<!-- Floating Badge on Image -->
+<div class="absolute top-4 left-4 glass-card px-3 py-1 rounded-full flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-xs font-bold text-white uppercase tracking-wider">High Match</span>
+</div>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 md:bg-gradient-to-r md:from-transparent md:to-surface-dark/90"></div>
+</div>
+<!-- Right: Content & Details -->
+<div class="flex-1 p-6 md:p-8 flex flex-col justify-between bg-surface-dark/30 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none">
+<!-- Top Info -->
+<div class="flex flex-col gap-4">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
+<img alt="Donor Logo" class="w-full h-full object-cover" data-alt="Hotel logo placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfvr5THQIw89jvtAXYQ4C1S0vWPU7pkpGQyf18dWk7WHap7efrsDz89i-AHc96lFKsr4W-DieTDC1r5Sw6UN6Hg36hzBtqauDfw0K-iCfVY1i2zVof1bxJmnNfQOg48S2IVK362SXNYywjvIMGaucAtuSC_RZr6KzIIRRnVakgyi8_iL5Amtz-gb8p4j_kvHIpvT9XS3U4S75YQoO28El3A9IgwEYK5inqiFMi6Jg0fWeIyWiH0mR1vCtWPmj3t95orLYyXFdLRWs"/>
+</div>
+<div>
+<p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Donation Source</p>
+<h3 class="text-white font-bold text-lg">The Ritz Carlton</h3>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="text-primary font-bold text-2xl tabular-nums">02:14:00</div>
+<p class="text-xs text-slate-400">Safe Hours Remaining</p>
+</div>
+</div>
+<hr class="border-white/10 my-2"/>
+<div>
+<h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2">Artisan Bakery Surplus</h1>
+<p class="text-slate-300 text-lg leading-relaxed">Assorted sourdough loaves, baguettes, and pastries from morning service. All items packaged in food-safe crates.</p>
+</div>
+<!-- Data Tags Grid -->
+<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="bg-white/5 p-3 rounded-lg border border-white/5">
+<p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">scale</span> Quantity</p>
+<p class="text-white font-bold text-xl">20 kg <span class="text-sm font-normal text-slate-400">~50 meals</span></p>
+</div>
+<div class="bg-white/5 p-3 rounded-lg border border-white/5">
+<p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">near_me</span> Distance</p>
+<p class="text-white font-bold text-xl">0.8 mi <span class="text-sm font-normal text-slate-400">~5 mins</span></p>
+</div>
+<div class="bg-white/5 p-3 rounded-lg border border-white/5 col-span-2">
+<p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-blue-400">auto_awesome</span> AI Logistics Insight</p>
+<p class="text-white text-sm">Perfect fit for your current vehicle capacity. Route optimized to minimize traffic.</p>
+</div>
+</div>
+</div>
+<!-- Actions (Desktop view embedded in card) -->
+<div class="mt-8 flex items-center justify-between gap-6">
+<button class="group/btn flex-1 h-14 rounded-full border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500 hover:text-white text-orange-400 font-bold transition-all duration-300 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-2xl group-hover/btn:scale-110 transition-transform">close</span>
+<span class="text-sm uppercase tracking-wider">Skip</span>
+</button>
+<button class="group/btn flex-[2] h-16 rounded-full bg-primary hover:bg-green-400 text-background-dark font-extrabold text-lg transition-all duration-300 shadow-[0_0_20px_rgba(33,196,93,0.4)] hover:shadow-[0_0_30px_rgba(33,196,93,0.6)] flex items-center justify-center gap-2 transform hover:-translate-y-1">
+<span class="material-symbols-outlined text-3xl group-hover/btn:scale-110 transition-transform fill-1">check_circle</span>
+<span class="uppercase tracking-wider">Request Donation</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Floating Keyboard Shortcuts Hint -->
+<div class="absolute -bottom-16 left-0 right-0 flex justify-center items-center gap-8 opacity-50">
+<div class="flex items-center gap-2 text-slate-400 text-xs uppercase tracking-widest">
+<span class="w-8 h-8 rounded-lg border border-slate-600 flex items-center justify-center font-bold">←</span>
+                        Skip
+                    </div>
+<div class="flex items-center gap-2 text-slate-400 text-xs uppercase tracking-widest">
+                        Request
+                        <span class="w-8 h-8 rounded-lg border border-slate-600 flex items-center justify-center font-bold">→</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

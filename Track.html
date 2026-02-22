@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Rescue Tracking &amp; ETA - SaveIt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#21c45d",
+                        "primary-glow": "#21c45d",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#0B120E", // Deep dark charcoal/green tint
+                        "surface-dark": "#16231b",
+                        "surface-glass": "rgba(22, 35, 27, 0.7)",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "glow": "0 0 20px rgba(33, 196, 93, 0.3)",
+                        "glow-sm": "0 0 10px rgba(33, 196, 93, 0.2)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .map-grid {
+            background-image: 
+                linear-gradient(rgba(33, 196, 93, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(33, 196, 93, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .pulse-ring {
+            position: relative;
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #21c45d;
+            animation: pulse-ring-anim 2s infinite;
+        }
+        @keyframes pulse-ring-anim {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+
+        /* Simulating the progress ring reduction */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden flex flex-col h-screen">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2a372f] bg-surface-dark px-10 py-3 z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined" style="font-size: 24px;">recycling</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">SaveIt</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9 hidden md:flex">
+<a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-medium leading-normal" href="#">Tracking</a>
+<a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Impact</a>
+<a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="size-10 flex items-center justify-center rounded-full bg-surface-dark border border-[#3d5145] text-white hover:bg-[#2a372f] transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-[#3d5145]" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVmo-9jUe7iaHlTeJDtsGkjYFJ9ftvC42GdN4Cz32zw7NmIBuyT-DJgIiuKeTFE46xoBr05OMBHvm7wURedKfECYKwxAD1Svx2mkUWPA9xHOZJvnNaaQHcLIgyfDAhh6AirxctWr420hNgfM0WrnEJIwBHwiqBiUUIjlY44kW7FmK1FuzfCnQ0FZzIcatd0jfiqMMGmxFE3TAWbk68NtphMRHS_UaYd1xUF032owZfbc6Wu8y2g2bBIHcJNCUAAGheUtKemwtnn30");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 relative flex overflow-hidden">
+<!-- Map Background Layer -->
+<div class="absolute inset-0 z-0 bg-background-dark map-grid">
+<!-- Simulated Dark Map -->
+<div class="absolute inset-0 opacity-40 bg-cover bg-center mix-blend-overlay" data-alt="Dark aerial map texture of city streets at night" data-location="New York City" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoIohkJukvjDufuvvPYUhMiMqMuoh4T4bl74nE9U3evk1bswyJ9tjqdBxjAwC3FEjxSiNNjQwGs244hN0-fpJME31gWCGdMu8YOEX-bCdzfvKVTV6YaZqNjXSMO-VCer1UDarrF2oiF95Fc1a0a2g3MhtWlvtsjPlxqTgmy9OFPZT7BlAMV78NEGabDMOgO1lGbA7lC1CQompxXH4OC4nctKLV--cHCnP7ZyT6Y4pDRBo6UOlhnXL5111O9UwnS5bBmeuipmhcoCA");'></div>
+<!-- Map Overlay Gradient for readability -->
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark/90 via-background-dark/40 to-background-dark/80"></div>
+<!-- Route Visualization (SVG Overlay) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-10">
+<!-- Path -->
+<path d="M 200 400 Q 400 350 550 450 T 800 300" fill="none" stroke="#3d5145" stroke-dasharray="10 10" stroke-width="6"></path>
+<path class="animate-[dash_20s_linear_infinite]" d="M 200 400 Q 400 350 550 450 T 800 300" fill="none" stroke="#21c45d" stroke-dasharray="20 10" stroke-width="3">
+<animate attributename="stroke-dashoffset" dur="5s" from="1000" repeatcount="indefinite" to="0"></animate>
+</path>
+<!-- Pickup Point -->
+<circle class="animate-pulse" cx="200" cy="400" fill="#ffffff" r="8"></circle>
+<circle cx="200" cy="400" fill="none" opacity="0.3" r="20" stroke="#ffffff" stroke-width="1"></circle>
+<!-- Agent Location -->
+<g transform="translate(550, 450)">
+<circle class="shadow-glow" fill="#21c45d" r="12"></circle>
+<circle class="animate-ping" fill="none" opacity="0.5" r="30" stroke="#21c45d" stroke-width="1"></circle>
+<!-- Vehicle Icon -->
+<foreignobject height="16" width="16" x="-8" y="-8">
+<span class="material-symbols-outlined text-black text-[16px]">electric_scooter</span>
+</foreignobject>
+</g>
+</svg>
+<!-- Agent Floating Label on Map -->
+<div class="absolute top-[400px] left-[550px] transform translate-x-6 -translate-y-12 z-20">
+<div class="bg-surface-glass backdrop-blur-md border border-[#3d5145] rounded-full px-4 py-2 flex items-center gap-3 shadow-xl">
+<div class="bg-cover bg-center rounded-full size-8 border border-primary" data-alt="Agent Ravi portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJBAs6YAYzRGabcuoglcL1nkxOf3TXhbnL6KOVn7F_1OtYbyivh2Ug-WOidFD1bW3AAnKI2RaV7JSov9QY4DPF6hrqtkTqKXnGno_G7Yy2D3XPJbqwTlU6B-gKqZdTZ-PXLrXmz2Rti5sGiOAsnqBwXCwpGgFaW3a76DRQn72hPWz_9MufnkSj0fkbhbuISqTOEIt8VxDByLsQzT4DUYfKKFXIaHkACKSAbq6SxpTJb_gD5xOAeQFxhTAXAsrTXEBh_xgF2ZYIkX4");'></div>
+<div>
+<p class="text-white text-xs font-bold leading-none">Ravi K.</p>
+<p class="text-primary text-[10px] font-medium leading-none mt-1">On the way • 8m</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Foreground UI Grid -->
+<div class="relative z-20 w-full h-full p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 pointer-events-none">
+<!-- Left Area: Status & Back Button -->
+<div class="lg:col-span-8 flex flex-col justify-between pointer-events-auto">
+<div class="flex items-start gap-4">
+<button class="size-12 rounded-full bg-surface-glass backdrop-blur-md border border-[#3d5145] flex items-center justify-center text-white hover:bg-surface-dark transition-colors group">
+<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</button>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="flex size-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-primary text-sm font-bold tracking-widest uppercase">Live Tracking</span>
+</div>
+<h1 class="text-white text-3xl md:text-4xl font-bold tracking-tight">Pickup Confirmed</h1>
+<p class="text-[#9fb7a8] text-sm md:text-base max-w-md">Route optimized by AI logistics. Agent is prioritizing cold storage transfer.</p>
+</div>
+</div>
+<!-- Bottom Left Stats (Map Overlay) -->
+<div class="hidden lg:flex gap-4">
+<div class="bg-surface-glass backdrop-blur-md border border-[#3d5145] rounded-xl p-4 flex items-center gap-3 min-w-[200px]">
+<div class="bg-primary/20 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">thermostat</span>
+</div>
+<div>
+<p class="text-[#9fb7a8] text-xs font-medium">Cargo Temp</p>
+<p class="text-white text-lg font-bold">3.2°C <span class="text-xs font-normal text-primary">Optimal</span></p>
+</div>
+</div>
+<div class="bg-surface-glass backdrop-blur-md border border-[#3d5145] rounded-xl p-4 flex items-center gap-3 min-w-[200px]">
+<div class="bg-primary/20 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">speed</span>
+</div>
+<div>
+<p class="text-[#9fb7a8] text-xs font-medium">Speed</p>
+<p class="text-white text-lg font-bold">24 km/h</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Area: Control Panel -->
+<div class="lg:col-span-4 flex flex-col justify-end lg:justify-start h-full pointer-events-auto">
+<!-- Floating Glass Card -->
+<div class="bg-surface-dark/90 backdrop-blur-xl border border-[#3d5145] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-full lg:h-auto overflow-y-auto">
+<!-- ETA Ring Section -->
+<div class="p-8 pb-4 flex flex-col items-center justify-center border-b border-[#2a372f]">
+<div class="relative size-48 flex items-center justify-center mb-2">
+<!-- SVG Ring -->
+<svg class="size-full -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#2a372f" stroke-width="4"></circle>
+<circle class="drop-shadow-[0_0_10px_rgba(33,196,93,0.5)]" cx="50" cy="50" fill="none" r="45" stroke="#21c45d" stroke-dasharray="283" stroke-dashoffset="60" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center z-10">
+<span class="text-[#9fb7a8] text-xs font-medium uppercase tracking-wider mb-1">ETA</span>
+<span class="text-white text-4xl font-bold tracking-tighter">08<span class="text-primary">:</span>12</span>
+<span class="text-[#9fb7a8] text-sm mt-1">mins away</span>
+</div>
+</div>
+<div class="text-center">
+<p class="text-primary font-bold text-sm flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+                                3h 42m safe remaining
+                            </p>
+<p class="text-[#9fb7a8] text-xs mt-1">Consumption window closing soon</p>
+</div>
+</div>
+<!-- Agent Details -->
+<div class="px-6 py-4 border-b border-[#2a372f]">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-white text-sm font-semibold uppercase tracking-wider">Agent Details</h3>
+<div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-0.5 rounded-full border border-yellow-500/20">
+<span class="material-symbols-outlined text-yellow-400 text-[14px]">star</span>
+<span class="text-yellow-400 text-xs font-bold">4.9</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="bg-cover bg-center rounded-full size-14 ring-2 ring-primary ring-offset-2 ring-offset-[#16231b]" data-alt="Agent Ravi portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBgOHfUZnu0-xr_ikreQ0auIXU9pG_uZmDxVKHy6i5m8k7HP6uY-XZfigxIOvHnDQywQdWDVggE2eeAupuT5H5rDYuMT_J1GLo2yqBNkjEfH3PbaLN-FBwXFir1pdwBc3WaT5W9VcDsqIz5d1ioo0IbPRV0UPnfnWTpCqHzHlofsbj4GVfNyj7zua-hL3p1n0ikZ_M02NSlm7IyUSBwxaoeUxgpPL8xk74bmt-y3LCQEu5V1IqEkcHrlFVmPlN7m-dxCmfavTuHPnY");'></div>
+<div class="absolute -bottom-1 -right-1 bg-surface-dark rounded-full p-1 border border-[#3d5145]">
+<div class="bg-purple-500 rounded-full size-4 flex items-center justify-center">
+<span class="text-[8px] font-bold text-white">15</span>
+</div>
+</div>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-lg">Ravi Kumar</h4>
+<div class="flex items-center gap-3">
+<span class="text-[#9fb7a8] text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">electric_scooter</span> E-Scooter
+                                    </span>
+<span class="text-[#9fb7a8] text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">work_history</span> 1240 jobs
+                                    </span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="size-10 rounded-full bg-[#2a372f] text-white hover:bg-primary hover:text-black transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">chat</span>
+</button>
+<button class="size-10 rounded-full bg-primary text-black hover:bg-primary/90 transition-colors flex items-center justify-center shadow-glow-sm">
+<span class="material-symbols-outlined">call</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pricing Breakdown -->
+<div class="p-6 flex-1 flex flex-col justify-end">
+<div class="space-y-3 mb-6">
+<div class="flex justify-between items-center text-sm">
+<span class="text-[#9fb7a8]">Pickup Fee</span>
+<span class="text-white font-medium">$5.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-[#9fb7a8] flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">distance</span> Distance (3.2km)</span>
+<span class="text-white font-medium">$2.50</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-[#9fb7a8] flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">ac_unit</span> Cold Storage</span>
+<span class="text-white font-medium">$4.00</span>
+</div>
+<div class="h-px bg-[#2a372f] my-2"></div>
+<div class="flex justify-between items-end">
+<span class="text-white font-bold text-lg">Total</span>
+<span class="text-primary font-display font-bold text-3xl tracking-tight">$11.50</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-primary text-black font-bold py-4 rounded-full text-base hover:bg-primary/90 transition-colors shadow-glow flex items-center justify-center gap-2">
+                                Contact Support
+                            </button>
+<button class="w-full bg-[#2a372f] text-white font-bold py-4 rounded-full text-base hover:bg-[#3d5145] transition-colors">
+                                Modify Pickup
+                            </button>
+</div>
+<div class="mt-4 flex items-center justify-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-primary text-[14px]">auto_awesome</span>
+<span class="text-[#9fb7a8] text-xs">XP Gained on completion: +120XP</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification (Fixed Position) -->
+<div class="absolute bottom-6 left-6 z-50 pointer-events-none hidden md:block">
+<div class="bg-surface-dark border border-[#3d5145] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 animate-[slideIn_0.5s_ease-out]">
+<div class="bg-primary/20 p-1.5 rounded-full text-primary">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div>
+<p class="text-sm font-medium">Cold storage unit verified</p>
+<p class="text-xs text-[#9fb7a8]">Just now</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>
