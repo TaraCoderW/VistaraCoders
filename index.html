@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SaveIt - Complete Solution</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#21c45d",
+                        "primary-glow": "#21c45d80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#0f1512",
+                        "surface-dark": "#1a241f",
+                        "glass-border": "rgba(255, 255, 255, 0.08)",
+                        "glass-bg": "rgba(22, 32, 26, 0.6)",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "neon": "0 0 20px -5px #21c45d",
+                        "glass": "0 8px 32px 0 rgba(0, 0, 0, 0.37)"
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(22, 32, 26, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 41, 35, 0.6) 0%, rgba(18, 26, 22, 0.8) 100%);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(33, 196, 93, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(33, 196, 93, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #21c45d;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-x-hidden">
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px]"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50 glass-panel border-b border-glass-border">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary to-emerald-800 rounded-xl flex items-center justify-center shadow-neon">
+                    <span class="material-symbols-outlined text-white" style="font-size: 24px;">recycling</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white leading-none">SaveIt</h1>
+                    <p class="text-xs text-slate-400 font-medium tracking-wide">SMART PLATFORM</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="nav-link text-white text-sm font-medium transition-colors" href="index.html">Home</a>
+                <a class="nav-link text-slate-400 text-sm font-medium hover:text-white transition-colors" href="Landing.html">Learn</a>
+                <a class="nav-link text-slate-400 text-sm font-medium hover:text-white transition-colors" href="AIPAGE.html">AI Detection</a>
+                <a class="nav-link text-slate-400 text-sm font-medium hover:text-white transition-colors" href="dashboard.html">Dashboard</a>
+                <a class="nav-link text-slate-400 text-sm font-medium hover:text-white transition-colors" href="marketplace.html">Marketplace</a>
+                <a class="nav-link text-slate-400 text-sm font-medium hover:text-white transition-colors" href="Track.html">Tracking</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button class="md:hidden p-2 text-white hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative pt-20 min-h-screen flex flex-col items-center justify-center">
+        <!-- Hero Section -->
+        <div class="max-w-6xl mx-auto px-6 py-16 text-center z-10">
+            <h2 class="text-5xl md:text-6xl font-bold mb-6 text-white">
+                Food Should <span class="text-primary">Feed</span>, Not Rot
+            </h2>
+            <p class="text-xl text-slate-300 mb-12 max-w-3xl mx-auto">
+                SaveIt is a comprehensive platform designed to combat food waste through AI detection, real-time tracking, and community engagement.
+            </p>
+
+            <!-- Feature Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                <!-- Landing Card -->
+                <a href="Landing.html" class="glass-card p-8 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-primary text-2xl">info</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Learn About SaveIt</h3>
+                    <p class="text-slate-300 mb-4">Discover our mission, impact, and how we're revolutionizing food waste management.</p>
+                    <span class="text-primary font-semibold inline-flex items-center gap-2">
+                        Explore <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </span>
+                </a>
+
+                <!-- AI Detection Card -->
+                <a href="AIPAGE.html" class="glass-card p-8 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-primary text-2xl">smart_camera</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">AI Food Detection</h3>
+                    <p class="text-slate-300 mb-4">Real-time AI vision system for identifying and tracking food items automatically.</p>
+                    <span class="text-primary font-semibold inline-flex items-center gap-2">
+                        Detect <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </span>
+                </a>
+
+                <!-- Dashboard Card -->
+                <a href="dashboard.html" class="glass-card p-8 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-primary text-2xl">dashboard</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Dashboard</h3>
+                    <p class="text-slate-300 mb-4">Comprehensive analytics and action tracking for your waste prevention efforts.</p>
+                    <span class="text-primary font-semibold inline-flex items-center gap-2">
+                        View Stats <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </span>
+                </a>
+
+                <!-- Marketplace Card -->
+                <a href="marketplace.html" class="glass-card p-8 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-primary text-2xl">storefront</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Marketplace</h3>
+                    <p class="text-slate-300 mb-4">Connect with NGOs and food rescue organizations in your community.</p>
+                    <span class="text-primary font-semibold inline-flex items-center gap-2">
+                        Browse <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </span>
+                </a>
+
+                <!-- Tracking Card -->
+                <a href="Track.html" class="glass-card p-8 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-primary text-2xl">local_shipping</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Live Tracking</h3>
+                    <p class="text-slate-300 mb-4">Real-time tracking of food rescue deliveries and impact metrics.</p>
+                    <span class="text-primary font-semibold inline-flex items-center gap-2">
+                        Track <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </span>
+                </a>
+
+                <!-- Shared Vision Card -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                        <span class="material-symbols-outlined text-primary text-2xl">eco</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Our Vision</h3>
+                    <p class="text-slate-300 mb-4">A world where technology and community work together to eliminate food waste and feed those in need.</p>
+                    <span class="text-primary font-semibold">Connected Platform</span>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-12">
+                <div class="glass-card p-8 rounded-2xl">
+                    <h4 class="text-primary text-4xl font-bold mb-2">1000+</h4>
+                    <p class="text-slate-300">Food Waste Heroes</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl">
+                    <h4 class="text-primary text-4xl font-bold mb-2">50K+</h4>
+                    <p class="text-slate-300">Meals Rescued</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl">
+                    <h4 class="text-primary text-4xl font-bold mb-2">25%</h4>
+                    <p class="text-slate-300">Waste Reduction</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="max-w-2xl mx-auto px-6 py-12 text-center z-10">
+            <h3 class="text-3xl font-bold text-white mb-4">Ready to Make an Impact?</h3>
+            <p class="text-slate-300 mb-8">Start by exploring our AI detection system or connecting with local food rescue initiatives.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="AIPAGE.html" class="px-8 py-3 bg-primary text-black font-bold rounded-lg hover:bg-primary-glow transition-all shadow-neon">
+                    Try AI Detection
+                </a>
+                <a href="marketplace.html" class="px-8 py-3 bg-surface-dark text-white font-bold rounded-lg border border-glass-border hover:border-primary/50 transition-all">
+                    Find Organizations
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-glass-border glass-panel mt-16">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-white font-bold mb-4">SaveIt</h4>
+                    <p class="text-slate-400 text-sm">Fighting food waste with AI and community.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Platform</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="Landing.html" class="hover:text-primary transition-colors">About</a></li>
+                        <li><a href="AIPAGE.html" class="hover:text-primary transition-colors">Technology</a></li>
+                        <li><a href="Track.html" class="hover:text-primary transition-colors">Tracking</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="dashboard.html" class="hover:text-primary transition-colors">Dashboard</a></li>
+                        <li><a href="marketplace.html" class="hover:text-primary transition-colors">Marketplace</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors">Twitter</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">GitHub</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-glass-border pt-8 text-center text-slate-400 text-sm">
+                <p>&copy; 2026 SaveIt. Fighting food waste together. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
